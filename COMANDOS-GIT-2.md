@@ -27,3 +27,19 @@
 ## <p style="text-align: center;"> Closes #<num "issue"> <p>
 > **Def:** Se establece en el commit que se realizara para guardar los cambios y cerrara el issue correspondiente al que se haga referencia.  
 > `Nota: Esto funciona con github y cobrara efecto hasta que se realice el PUSH al origen.`   
+
+## <p style="text-align: center;"> Crear un repositorio local y llevarlo a github #<num "issue"> <p>
+> Se debe crear un directorio como nombre del proyecto y dentro de este realizar los siguientes comandos.  
+> `Nota: Se debe crear en GitHub el proyecto con el nombre identico al del directorio creado localmente completamente vacio para poder realizar el PUSH sin problemas.`
+~~~
+git init
+
+git add .
+
+git commit -m "[MENSAJE]"
+
+git remote add origin https://github.com/NOMBRE_USUARIO/NOMBRE_PROYECTO.git
+
+git push -u origin master
+~~~
+
