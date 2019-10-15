@@ -1,16 +1,16 @@
 # <p style="text-align: center;"> COMANDOS GIT. </p>
 
 ## <p style="text-align: center;"> Git BRANCH <p>
-> **Def:** Muestra todas las ramas del repositorio local y señala en la que se encuentra
-> > **git branch "nombre"** Este comando crea una rama a partir de la rama en la que estes situado.  
+> **Def:** Muestra todas las ramas del repositorio local y señala en la que se encuentra  
+> > **git branch "nombre"** Este comando crea una rama a partir de la rama en la que estes situado.    
 > >`Nota: Para borrar una rama sera necesario estar en otro ajena a esa rama recomendado hacerlo desde la rama MASTER.`  
 > > **git checkout -b "nombre"** Este comando crea una rama a partir de la rama en la que estes situado y se mueve a la nueva rama.  
-> >`Nota: Se puede lanzar exepcion si hay cambios en el area de trabajo o area de pruebas.`
+> >`Nota: Se puede lanzar exepcion si hay cambios en el area de trabajo o area de pruebas.`  
 > > **git branch -d "nombre"** Borra la rama especificada y todos los archivos.  
-> >`Nota: Puede lanzar una alerta en caso de que contenga cambios no MERGE con la rama que intenta borrarla.`
+> >`Nota: Puede lanzar una alerta en caso de que contenga cambios no MERGE con la rama que intenta borrarla.`  
 > > **git branch -D "nombre"** Borra la rama especificada y todos los archivos.  
-> >`Nota: Forza a borrar la rama independiente de que existan cambios sin MERGE`
-> > > **git push --set-upstream origin "nombre"** Necesario cuando se cree una nueva rama local puesto que no tiene establecido un origen en el remoto.   
+> >`Nota: Forza a borrar la rama independiente de que existan cambios sin MERGE`  
+> > > **git push --set-upstream origin "nombre"** Necesario cuando se cree una nueva rama local puesto que no tiene establecido un   origen en el remoto.   
 
 ## <p style="text-align: center;"> Git STATUS <p>
 > **Def:** Muestra un resumen de la rama y los cambios pendientes en ella sin commit.  
