@@ -1,0 +1,306 @@
+
+
+Use MaestroMuebles
+Go
+if object_id('MaestroMuebles.dbo.proc_InformacionPromocionesValidaciones', 'P') is not null
+		drop proc dbo.proc_InformacionPromocionesValidaciones
+go	
+ 
+CREATE PROCEDURE dbo.proc_InformacionPromocionesValidaciones @iOpcion tinyint,@iDepto int,@iProveedor int,@iFolio int,@iSubFolio int,@iSubSubFolio int,@sInicialesDeptoDiv varchar(3),@iFormaCobro tinyint,@cIdentificador varchar(35)
+with execute as owner  
+AS
+begin     
+/*****************************************************************************  
+--DROP PROCEDURE proc_InformacionPromocionesValidaciones  
+EXEC proc_InformacionPromocionesValidaciones  
+FECHA:      //.  
+DESCRIPCION: realiza las validaciones de la pantalla de informacion de promociones
+  
+MODIFICÓ: Isanor Lopez.  
+SOLICITÓ: SISTEMAS COMPRAS MUEBLES (Rafael Ramírez Mojardín).  
+*****************************************************************************/  
+declare @sSql nvarchar(4000);
+/*
+declare @iOpcion tinyint;
+declare @iDepto int;
+declare @iProveedor int;
+declare @iFolio int;
+declare @iSubFolio int;
+declare @iSubSubFolio int;
+declare @sInicialesDeptoDiv varchar(3);
+declare @iFormaCobro tinyint;
+declare @cIdentificador varchar(35);
+
+set @iOpcion = 2;
+set @iDepto = 7;
+set @iProveedor = 10741;
+set @iFolio = 215;
+set @iSubFolio = 1;
+set @iSubSubFolio = 0;
+set @sInicialesDeptoDiv = 'R';
+set @iFormaCobro = 3;
+set @cIdentificador = '';
+*/
+
+set nocount on
+
+	--ivas
+	if @iOpcion=1 
+	begin
+		--@iParametro1 trae un proveedor
+		
+		declare @iIvaCero tinyint
+		set @iIvaCero=0
+		
+		select @iIvaCero=IvaCero
+		from maestromuebles.dbo.cenproveedorarea with (nolock) 
+		where Depto=@iDepto and NumProveedor=@iProveedor 
+		
+		if @iIvaCero=1 -- el prov tiene permitido capturar iva=0
+		begin
+			select distinct IVA from maestromuebles.dbo.CenComprasIvas with (nolock) order by IVA
+		end
+		else
+		begin
+			select distinct IVA from maestromuebles.dbo.CenComprasIvas with (nolock) where iva>0 order by IVA
+		end				
+	end
+		
+	--se obtiene los codigos del folio			
+	else if @iOpcion=2
+	begin	
+		
+		if object_id('tempdb.dbo.#tmpCodigosSubFolio', 'U') is not null
+			drop table #tmpCodigosSubFolio	
+			
+		if object_id('tempdb.dbo.#tmpCodigosFolios', 'U') is not null
+			drop table #tmpCodigosFolios
+			
+		if object_id('tempdb.dbo.#tmpInfoCompraDirecta', 'U') is not null
+			drop table #tmpInfoCompraDirecta				
+			
+		create table #tmpInfoCompraDirecta
+		(
+			codigo int not null default(0),
+			imp_partproveedoradjunto int not null default(0), 
+			prc_partproveedoradjunto int not null default(0),
+			num_complemento int not null default(0),
+			num_proveedoradjunto int not null default(0),
+			imp_cobroproveedor int not null default(0),
+		)			
+			
+		insert into #tmpInfoCompraDirecta(codigo,imp_partproveedoradjunto,prc_partproveedoradjunto,num_complemento,num_proveedoradjunto,imp_cobroproveedor)
+		select a.codigo,a.imp_partprovadjunto,a.prc_partprovadjunto,a.num_complemento,b.num_proveedor,b.imp_cobroproveedor
+		from ComprasMuebles.dbo.ctl_comcobrosproveedor a with (nolock) join ComprasMuebles.dbo.ctl_comcobrosproveedordetalle b with (nolock)
+		on(a.num_folio=b.num_folio and a.codigo=b.codigo and a.num_complemento=b.num_complemento and a.num_proveedoradjunto=b.num_proveedor)
+		where a.num_folio=@iFolio and a.clv_inicialesdeptodiv=@sInicialesDeptoDiv and LEFT(a.codigo,1)=@iDepto
+		  and b.clv_tipoproceso=0 --los registros originales de la captura de promo		
+
+		-- Se toman los cobros generados
+		select a.num_folio,b.num_subfolio,b.num_subsubfolio,a.codigo,a.num_codigoregalo,a.num_codigocomprarequerido,
+			   b.num_ventaint,b.num_ventafron,b.num_complemento,b.clv_tipoproceso, b.num_proveedor
+		into #tmpCodigosSubFolio
+		from ComprasMuebles.dbo.ctl_comcobrosproveedor a with (nolock) join ComprasMuebles.dbo.ctl_comcobrosproveedordetalle b with (nolock)
+		on(a.num_folio=b.num_folio and a.codigo=b.codigo and a.num_complemento=b.num_complemento)
+		where a.num_depto=@iDepto and a.clv_inicialesdeptodiv=@sInicialesDeptoDiv
+		  and a.num_folio=@iFolio
+		  and b.clv_nomostrarfolio=0 and b.clv_tipoproceso>0
+		  and b.clv_formacobro=@iFormaCobro
+		  
+		-- Se toman los folio pertenecientes a la pro
+		select a.num_folio,b.num_subfolio,b.num_subsubfolio,b.num_proveedor,
+		       a.codigo,a.num_codigoregalo,a.num_codigocomprarequerido,a.des_modelo,a.des_modeloregalo,
+		       convert(char(10),a.fec_inicial,121) as fec_inicial,convert(char(10),a.fec_final,121) as fec_final,
+		       b.clv_formacobro,b.num_ventaint,b.num_ventafron,a.num_inventariototalint,a.num_inventariototalfro,
+		       a.imp_partproveedor,a.prc_partproveedor,a.imp_partcoppel,a.prc_partcoppel,a.imp_costointerior,a.imp_costopromoint,
+		       b.imp_cobroproveedor,a.imp_preciovtaint,a.imp_preciovtafron,a.imp_preciopromint,a.imp_preciopromfron,
+		       a.num_paquete,b.num_complemento,a.num_limitadanumpiezas,a.idu_cobrar,a.clv_cobroproveedor,b.clv_tipoproceso,
+		       a.num_cantidadregalo,a.imp_costointeriorregalo
+		into #tmpCodigosFolios
+		from ComprasMuebles.dbo.ctl_comcobrosproveedor a with (nolock) join ComprasMuebles.dbo.ctl_comcobrosproveedordetalle b with (nolock)
+		on(a.num_folio=b.num_folio and a.codigo=b.codigo and a.num_complemento=b.num_complemento)
+		where a.num_depto=@iDepto and a.clv_inicialesdeptodiv=@sInicialesDeptoDiv
+		  and a.num_folio=@iFolio and b.clv_nomostrarfolio=0 and b.clv_tipoproceso=0 and b.num_subfolio = 0
+		  and b.clv_formacobro=@iFormaCobro	  
+		  
+		  -- se obtiene las ventas del Subfolio o SubSubfolio	  		  
+		  update #tmpCodigosFolios
+		  set num_ventaint=b.num_ventaint,
+		      num_ventafron=b.num_ventafron,
+		      num_proveedor = b.num_proveedor
+		  from #tmpCodigosFolios a join #tmpCodigosSubFolio b
+		  on(a.num_folio=b.num_folio and a.codigo=b.codigo)
+		  where b.num_subfolio=@iSubFolio and b.num_subsubfolio=@iSubSubFolio 
+		  
+		  select a.codigo,a.num_codigoregalo,a.num_codigocomprarequerido,a.des_modelo,a.des_modeloregalo,
+				 a.fec_inicial,a.fec_final,
+				 a.clv_formacobro,a.num_ventaint,a.num_ventafron,a.num_inventariototalint,a.num_inventariototalfro,
+				 a.imp_partproveedor,a.prc_partproveedor,a.imp_partcoppel,a.prc_partcoppel,a.imp_costointerior,a.imp_costopromoint,
+		         a.imp_cobroproveedor,a.imp_preciovtaint,a.imp_preciovtafron,a.imp_preciopromint,a.imp_preciopromfron,
+				 a.num_paquete,a.num_complemento,a.num_limitadanumpiezas,a.idu_cobrar,a.clv_cobroproveedor,
+		       ((a.num_inventariototalint+num_inventariototalfro) - isnull(b.num_ventatotal,0)) as num_ventatotal,
+		       isnull(c.imp_partproveedoradjunto,0) as imp_partproveedoradjunto,isnull(c.prc_partproveedoradjunto,0) as prc_partproveedoradjunto,
+		       case when a.num_proveedor=isnull(c.num_proveedoradjunto,0) then 1 else 0 end as EsProvAdjunto,
+		       a.num_cantidadregalo,a.imp_costointeriorregalo,
+		       isnull(c.imp_cobroproveedor,0) as imp_cobroproveedoradjunto, num_proveedor, num_proveedoradjunto
+		from #tmpCodigosFolios a left join (
+										  --se obtiene la venta ya generada
+										  select codigo,num_codigoregalo,num_codigocomprarequerido,num_complemento,
+												 sum(num_ventaint+num_ventafron) as num_ventatotal
+										  from #tmpCodigosSubFolio
+										  where clv_tipoproceso=1 
+										  group by codigo,num_codigoregalo,num_codigocomprarequerido,num_complemento		
+										)b
+		on(a.codigo=b.codigo and a.num_codigoregalo=b.num_codigoregalo and a.num_codigocomprarequerido=b.num_codigocomprarequerido 
+		  and a.num_complemento=b.num_complemento) left join #tmpInfoCompraDirecta c with (nolock)
+		  on(a.codigo=c.codigo and a.num_complemento=c.num_complemento)
+		where a.clv_tipoproceso=0   
+	end
+	
+	--cuentas del depto 
+	else if @iOpcion=3 
+	begin					
+		select num_cuenta,num_subcuenta		 
+		from maestromuebles.dbo.CenDeptosDivision with (nolock) 
+		where Depto=@iDepto and InicialesDeptoDiv=@sInicialesDeptoDiv
+	end
+	
+	--se crea la temporal de pagos y codigos
+	else if @iOpcion=4
+	begin
+		set @sSql=           
+		' If(Exists (Select Name From temporales.dbo.SysObjects with (nolock) Where Name=''tmpCodigosPolizaPromo'+ rtrim(@cIdentificador) +''' and type=''U'')) '+
+		'        Drop Table temporales.dbo.tmpCodigosPolizaPromo'+ rtrim(@cIdentificador) +' '
+		exec MaestroMuebles.dbo.sp_executesql @sSql
+
+	    set @sSql=           
+	    ' If(Exists (Select Name From temporales.dbo.SysObjects with (nolock) Where Name=''tmpPagosBonifSinSku'+ rtrim(@cIdentificador) +''' and type=''U'')) '+
+	    '        Drop Table temporales.dbo.tmpPagosBonifSinSku'+ rtrim(@cIdentificador) +' '
+	    exec MaestroMuebles.dbo.sp_executesql @sSql
+	   
+		set @sSql=    
+		'create table temporales.dbo.tmpCodigosPolizaPromo'+ rtrim(@cIdentificador) +' '+
+		'( '+
+			'Codigo int not null default(0), '+
+			'ImporteNeto bigint not null default(0), '+
+			'Cantidad int not null default(0), '+
+			'CostoSalida bigint not null default(0), '+
+			'CostoEntrada bigint not null default(0) '+
+		')'
+		exec MaestroMuebles.dbo.sp_executesql @sSql
+						
+	    set @sSql=
+	    ' create table temporales.dbo.tmpPagosBonifSinSku' + rtrim(@cIdentificador) +' '+
+        '( '+
+           'FechaFactura smalldatetime not null default(''1900-01-01''), '+
+           'Importe bigint not null default(0),  '+
+           'Concepto varchar(150) not null default('' ''), '+
+           'Descripcion  varchar(65) not null default('' '') '+    
+        ') '
+        exec MaestroMuebles.dbo.sp_executesql @sSql       
+	end
+	
+	--se crea la temporal de nomostrar y se llena con el folio
+	else if @iOpcion=5
+	begin
+		set @sSql=           
+		' If(Exists (Select Name From temporales.dbo.SysObjects with (nolock) Where Name=''TmpFolioSubfolio'+ rtrim(@cIdentificador) +''' and type=''U'')) '+
+		'        Drop Table temporales.dbo.TmpFolioSubfolio'+ rtrim(@cIdentificador) +' '
+		exec MaestroMuebles.dbo.sp_executesql @sSql
+	   
+		set @sSql=    
+		'create table temporales.dbo.TmpFolioSubfolio'+ rtrim(@cIdentificador) +' '+
+		'( '+
+			'Folio int not null default(0), '+
+			'subFolio int not null default(0), '+
+			'opc_chequeodecompetencia int not null default 0 '+		
+		')'
+		exec MaestroMuebles.dbo.sp_executesql @sSql
+		
+		set @sSql= 
+		'insert into temporales.dbo.TmpFolioSubfolio'+ rtrim(@cIdentificador) +'(folio,subfolio) '+
+		'select @iFolio,@iSubFolio'
+		exec MaestroMuebles.dbo.sp_executesql @sSql,N'@iFolio int,@iSubFolio int',@iFolio,@iSubFolio
+	end
+	
+	--se destruyen las temporales
+	else if @iOpcion=6
+	begin
+		set @sSql=           
+		' If(Exists (Select Name From temporales.dbo.SysObjects with (nolock) Where Name=''tmpCodigosPolizaPromo'+ rtrim(@cIdentificador) +''' and type=''U'')) '+
+		'        Drop Table temporales.dbo.tmpCodigosPolizaPromo'+ rtrim(@cIdentificador) +' '
+		exec MaestroMuebles.dbo.sp_executesql @sSql
+
+	    set @sSql=           
+	    ' If(Exists (Select Name From temporales.dbo.SysObjects with (nolock) Where Name=''tmpPagosBonifSinSku'+ rtrim(@cIdentificador) +''' and type=''U'')) '+
+	    '        Drop Table temporales.dbo.tmpPagosBonifSinSku'+ rtrim(@cIdentificador) +' '
+	    exec MaestroMuebles.dbo.sp_executesql @sSql
+	    
+		set @sSql=  
+        ' If(Exists (Select Name From temporales.dbo.SysObjects with (nolock) Where Name=''TmpFolioSubfolio'+ rtrim(@cIdentificador) +''' and type=''U'')) '+
+		'        Drop Table temporales.dbo.TmpFolioSubfolio'+ rtrim(@cIdentificador) +' '
+		exec MaestroMuebles.dbo.sp_executesql @sSql
+	end
+	
+	--se revisa si el proveedor o el folio es de cobros por venta (telcel)
+	else if @iOpcion=7
+	begin			
+		declare @iProveedorTitular int=0,
+				@iValor int=0
+				
+		--revisar si el prov es titular y se le cobra como precio vta
+		select @iProveedorTitular=valor1 
+		from MaestroMuebles.dbo.CenConfiguraciones with (nolock) 
+		where id=198 and Valor1=@iProveedor 
+		
+		set @iProveedorTitular=ISNULL(@iProveedorTitular,0)
+				
+		if @iProveedorTitular=0 --si no es titular
+		begin					
+			if exists(select valor1 from MaestroMuebles.dbo.CenConfiguraciones with (nolock) where id=258 and Valor1=1)
+			begin
+				--revisar si su a prov titular se le cobra como precio vta
+				select @iProveedorTitular=a.num_proveedor
+				from ComprasMuebles.dbo.ctl_comcobrosproveedor a with (nolock)			
+				where a.num_depto=@iDepto and a.clv_inicialesdeptodiv=@sInicialesDeptoDiv and a.num_folio=@iFolio
+				  and a.num_proveedoradjunto=@iProveedor
+				  
+				set @iProveedorTitular=ISNULL(@iProveedorTitular,0)
+				
+				select @iValor=valor1 
+				from MaestroMuebles.dbo.CenConfiguraciones with (nolock) 
+				where id=198 and Valor1=@iProveedorTitular 
+				
+				set @iValor=ISNULL(@iValor,0)
+			end
+		end
+		else
+		begin
+			set @iValor=@iProveedorTitular
+		end
+		
+		if @iValor>0
+		begin
+			select @iValor as valor1
+		end				
+	end
+end
+GO
+GRANT EXECUTE ON proc_InformacionPromocionesValidaciones TO sysprogsmuebles
+GO
+PROC_DOCUMENTACION 'proc_InformacionPromocionesValidaciones','','realiza las validaciones de la pantalla de informacion de promociones'
+GO  
+PROC_DOCUMENTACION 'proc_InformacionPromocionesValidaciones','@iOpcion','indica la validacion a realizar'
+GO  
+PROC_DOCUMENTACION 'proc_InformacionPromocionesValidaciones','@iDepto','indica la validacion a realizar'
+GO  
+PROC_DOCUMENTACION 'proc_InformacionPromocionesValidaciones','@iProveedor','indica la validacion a realizar'
+GO  
+PROC_DOCUMENTACION 'proc_InformacionPromocionesValidaciones','@iFolio','indica la validacion a realizar'
+GO  
+PROC_DOCUMENTACION 'proc_InformacionPromocionesValidaciones','@iSubFolio','indica la validacion a realizar'
+GO  
+PROC_DOCUMENTACION 'proc_InformacionPromocionesValidaciones','@iSubSubFolio','indica la validacion a realizar'
+GO  
+PROC_DOCUMENTACION 'proc_InformacionPromocionesValidaciones','@sInicialesDeptoDiv','indica la validacion a realizar'
+GO  
