@@ -2,6 +2,7 @@
 
 ## <p style="text-align: center;"> Git BRANCH <p>
 > **Def:** Muestra todas las ramas del repositorio local y señala en la que se encuentra  
+> >**git branch -a** Lista todas las ramas del repositorio, tanto local como remotas.  
 > > **git branch "nombre"** Este comando crea una rama a partir de la rama en la que estes situado.    
 > >`Nota: Para borrar una rama sera necesario estar en otro ajena a esa rama recomendado hacerlo desde la rama MASTER.`  
 > > **git checkout -b "nombre"** Este comando crea una rama a partir de la rama en la que estes situado y se mueve a la nueva rama.  
