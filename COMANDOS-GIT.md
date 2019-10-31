@@ -18,12 +18,24 @@
 
 ## <p style="text-align: center;"> Git ADD . <p>
 > **Def:** comando para agregar los cambios al area de trabajo.  
-> `Nota: puede ser utilizado archivo por archivo o con un punto al final para agregar TODOS los cambios del area de trabajo al area de ensayo.`
+> `Nota: puede ser utilizado archivo por archivo o con un punto al final para agregar TODOS los cambios del area de trabajo al area de ensayo.`  
 
-## <p style="text-align: center;"> Git RESET HEAD <p>
+## <p style="text-align: center;"> Git RESET <p>
+>TIPOS: 
+  
+  > > **--Soft:** deshace los commits posteriores al commit que quieres regresar, pero los cambios con respecto al que regresas seran situados en el area de pruebas.  
+  > > **--Mixed:** deshace los commits posteriores al commit que quieres regresar, pero los cambios con respecto al que regresas seran situados en el area de trabajo sumando a los que puedas tener.  
+  > > **--Hard:** deshace los commits posteriores al commit que quieres regresar, ademas de no regresar ninguno de los cambios a ningun area de trabajo o pruebas.    
+  > > `Nota: Por mucho el reset mas peligroso puesto que no se cuenta con ningun tipo de respaldo, al regresar a un commit se       perdera todo hasta el commit al que estas regresando.`  
+  
+> **Git RESET HEAD**  
 > **Def:** Regresa los cambios del area de ensayo al area de trabajo.  
->`Nota: puede ser utilizado tal cual para regresar TODOS los cambios al area de trabajo o uno a uno especificando el archivo`
-
+>`Nota: puede ser utilizado tal cual para regresar TODOS los cambios al area de trabajo o uno a uno especificando el archivo`  
+> **Git RESET --[Tipo] [SHA-1]**
+> **Def:** Nos permitira regresar a un determinado commit y los cambios seran agregados dependiendo el tipo de reset.      
+> **Git RESET --[Tipo] origin/<branch_name>**  
+> **Def:** nos permite empatar dos ramas entre si, tomando en cuenta el tipo de reset colocara los cambios.  
+>`Nota: Comunmente utilizado para forzar los cambios de una rama a otra, comunmente para solucionar problemas de empate.`  
 
 ## <p style="text-align: center;"> Git COMMIT -M <"mensaje del commit"> <p>
 > **Def:** Establece un commit dentro del repositorio local.  
@@ -36,13 +48,6 @@
 ## <p style="text-align: center;"> Git LOG -<"num de commits"><p>
 > **Def:** Muestra la lista de commits realizados sobre la ramma en la que se encuentre.  
 >`Nota: recomendado consultar solo una lista determinada de commits, evitar problema de bug al consultar sin delimitar.`
-
-## <p style="text-align: center;"> Git RESET --[Tipo] [SHA-1]<p>
-> **Def:** Nos permitira regresar a un determinado commit ademas de tener 3 opciones.  
-> > **--Soft:** deshace los commits posteriores al commit que quieres regresar, pero los cambios con respecto al que regresas seran situados en el area de pruebas.  
-> > **--Mixed:** deshace los commits posteriores al commit que quieres regresar, pero los cambios con respecto al que regresas seran situados en el area de trabajo sumando a los que puedas tener.  
-> > **--Hard:** deshace los commits posteriores al commit que quieres regresar, ademas de no regresar ninguno de los cambios a ningun area de trabajo o pruebas.  
-> > `Nota: Por mucho el reset mas peligroso puesto que no se cuenta con ningun tipo de respaldo, al regresar a un commit se perdera todo hasta el commit al que estas regresando.`
 
 ## <p style="text-align: center;"> Git DIFF <"rama"> <"rama"> <"archivo"> <p>
 > **Def:** Denota las diferencias entre dos ramas.
