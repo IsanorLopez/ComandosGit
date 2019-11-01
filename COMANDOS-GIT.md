@@ -69,6 +69,6 @@
 
 ## <p style="text-align: center;"> Git MERGE "nombre_rama"<p>
 > **Def:** Realiza una mezcla de dos ramas, de la que haces referencia a la rama que estas.  
->`Nota: Pueden surgir conflictos que deben ser solucionados igual que en PUSH o PULL.`
+>`Nota: Pueden surgir conflictos que deben ser solucionados igual que en PUSH o PULL.`  
 > **Git merge --abort:** En caso de que el merge se vuela complejo al existir un conflicto e intentar resolverlo podemos abortar el merge, regresando los cambios que el merge trajo consigo.  
 >`Nota: Solo funciona cunado surja un conflicto, de tener un merge exitoso sin problemas este comando no surtira ningun efecto.`
