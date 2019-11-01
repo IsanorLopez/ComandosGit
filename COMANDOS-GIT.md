@@ -51,7 +51,7 @@
 
 ## <p style="text-align: center;"> Git DIFF <"rama"> <"rama"> <"archivo"> <p>
 > **Def:** Denota las diferencias entre dos ramas.
-> >**git diff master rama_mod1 archivo.txt:** Puede especificarse un archivo en especifico de no querer ver todos los cambios.
+> >**Git diff master rama_mod1 archivo.txt:** Puede especificarse un archivo en especifico de no querer ver todos los cambios.
 > >**git diff --name-status master rama_mod1** Muestra los cambios relalizados a nivel de archivo.  
 >`Nota: el resumen de cambios puede parecer abrumador en definitiva una herramienta de visualizacion es la opcion para esto`  
 
@@ -70,3 +70,5 @@
 ## <p style="text-align: center;"> Git MERGE "nombre_rama"<p>
 > **Def:** Realiza una mezcla de dos ramas, de la que haces referencia a la rama que estas.  
 >`Nota: Pueden surgir conflictos que deben ser solucionados igual que en PUSH o PULL.`
+> **Git merge --abort:** En caso de que el merge se vuela complejo al existir un conflicto e intentar resolverlo podemos abortar el merge, regresando los cambios que el merge trajo consigo.  
+>`Nota: Solo funciona cunado surja un conflicto, de tener un merge exitoso sin problemas este comando no surtira ningun efecto.`
