@@ -43,7 +43,7 @@ git remote add origin https://github.com/NOMBRE_USUARIO/NOMBRE_PROYECTO.git
 git push -u origin master
 ~~~
 
-## <p style="text-align: center;"> GIT REBASE #<num "issue"> <p>
+## <p style="text-align: center;"> GIT REBASE <p>
 > Funcion para compactar n commits que existen en una rama en uno solo, permitiendo generar un solo commit permitiendo limpiar la rama y facilitar su legibilidad en la linea del tiempo.
 
 - [X] git rebase -i head~[numero de los ultimos commits a compactar]
