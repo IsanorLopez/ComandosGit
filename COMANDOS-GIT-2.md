@@ -1,6 +1,6 @@
-# <p style="text-align: center;"> COMANDOS GIT 2. </p>
+# COMANDOS GIT 2.
 
-## <p style="text-align: center;"> Git STASH <p>
+## Git STASH
 > **Def:** Guarda el estado actual completo de la rama actual incluyendo el estado de los archivos en las diferentes areas, esta opcion es utilizada para guardar los cambios a **medio terminar**  para poder cambiar de ramma descartando los cambios en el area de trabajo.  
 >`Nota: los STASH duraran en memoria mientras no se borren. Usualmente solo deben ser temporales.`  
 > > **git stach list** Lista todos los stach realizados.   
@@ -14,36 +14,35 @@
 > >`Nota: no podra recuperar el STASH.`
 > > > **stash@{2}:** tanto APPLY como POP puede ser especifico agregando el numero de STASH deseado.
 
-## <p style="text-align: center;"> Git TAG <"Commit"> <p>
+## Git TAG <"Commit">
 > **Def:** Agrega una etiqueta a un commit en especifico puede ser una version o un texto para definir mejor el commit y puede tener varios tags   
 
-## <p style="text-align: center;"> Git GC <"Commit"> <p>
+## Git GC <"Commit">
 > **Def:** Ejecuta el recolector de basura que se encarga de desechar ciertos cambios y archivos bajo criterios de **git**.   
 
-## <p style="text-align: center;"> Issue #<num "issue"> <p>
-> **Def:** Un issur puede ser abierto desde la plataforma de github y puede ser referenciado en un commit para denotar que se trabaja e el issue en cuestion.  
+## Issue #<num "issue">
+> **Def:** Un issue puede ser abierto desde la plataforma de github y puede ser referenciado en un commit para denotar que se trabaja e el issue en cuestion.  
 > `Nota: Esto funciona con github y cobrara efecto hasta que se realice el PUSH al origen.`   
 
-## <p style="text-align: center;"> Closes #<num "issue"> <p>
+## Closes #<num "issue">
 > **Def:** Se establece en el commit que se realizara para guardar los cambios y cerrara el issue correspondiente al que se haga referencia.  
 > `Nota: Esto funciona con github y cobrara efecto hasta que se realice el PUSH al origen.`   
 
-## <p style="text-align: center;"> Crear un repositorio local y llevarlo a github #<num "issue"> <p>
+## Crear un repositorio local y llevarlo a github 
 > Se debe crear un directorio como nombre del proyecto y dentro de este realizar los siguientes comandos.  
-> `*Nota: Se debe crear en GitHub el proyecto con el nombre identico al del directorio creado localmente completamente vacio para poder realizar el PUSH sin problemas.`
-~~~
-git init
+> `*Nota: Se debe crear en GitHub el proyecto con el nombre identico al del directorio creado localmente completamente vacio para poder realizar el PUSH sin problemas.`  
+- [X] git init
 
-git add .
+- [X] git add .
 
-git commit -m "[MENSAJE]"
+- [X] git commit -m "[MENSAJE]"
 
-git remote add origin https://github.com/NOMBRE_USUARIO/NOMBRE_PROYECTO.git
+- [X] git remote add origin https://github.com/NOMBRE_USUARIO/NOMBRE_PROYECTO.git
 
-git push -u origin master
-~~~
+- [X] git push -u origin master
 
-## <p style="text-align: center;"> GIT REBASE <p>
+
+## GIT REBASE
 > Funcion para compactar n commits que existen en una rama en uno solo, permitiendo generar un solo commit permitiendo limpiar la rama y facilitar su legibilidad en la linea del tiempo.
 
 - [X] git rebase -i head~[numero de los ultimos commits a compactar]
