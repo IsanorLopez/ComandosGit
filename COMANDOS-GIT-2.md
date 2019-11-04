@@ -30,7 +30,7 @@
 
 ## <p style="text-align: center;"> Crear un repositorio local y llevarlo a github #<num "issue"> <p>
 > Se debe crear un directorio como nombre del proyecto y dentro de este realizar los siguientes comandos.  
-> `Nota: Se debe crear en GitHub el proyecto con el nombre identico al del directorio creado localmente completamente vacio para poder realizar el PUSH sin problemas.`
+> `*Nota: Se debe crear en GitHub el proyecto con el nombre identico al del directorio creado localmente completamente vacio para poder realizar el PUSH sin problemas.`
 ~~~
 git init
 
@@ -43,3 +43,14 @@ git remote add origin https://github.com/NOMBRE_USUARIO/NOMBRE_PROYECTO.git
 git push -u origin master
 ~~~
 
+## <p style="text-align: center;"> GIT REBASE #<num "issue"> <p>
+> Funcion para compactar n commits que existen en una rama en uno solo, permitiendo generar un solo commit permitiendo limpiar la rama y facilitar su legibilidad en la linea del tiempo.
+
+- [X] git rebase -i head~[numero de los ultimos commits a compactar]
+
+- [X] seleccionar "s" a los commits a compactar y "pick" al commit que quedara como contenedor
+
+- [X] analizar los mensajes correspondientes a cada commit.  
+
+- [X] git push -f   
+`*Nota: el realizar esta accion se debe forzar el PUSH puesto que se modificara le estructura de los commits y sera necesario forcar a que tome la estructura local como actual estructura.`  
