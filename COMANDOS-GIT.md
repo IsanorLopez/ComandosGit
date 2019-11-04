@@ -46,7 +46,7 @@
 
 ## Git LOG -<"num de commits">
 > **Def:** Muestra la lista de commits realizados sobre la ramma en la que se encuentre.  
->`Nota: recomendado consultar solo una lista determinada de commits, evitar problema de bug al consultar sin delimitar.`
+>`Nota: recomendado consultar solo una lista determinada de commits, evitar problema de bug al consultar sin delimitar.`  
 > **Git shortlog -<"num de commits"> :** Muestra la lista de commits realizados de manera mas resumida en un bloque de texto sin separar uno a uno.  
 
 ## Git DIFF <"rama"> <"rama"> <"archivo">
