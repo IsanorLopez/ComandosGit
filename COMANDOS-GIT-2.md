@@ -14,8 +14,16 @@
 > >`Nota: no podra recuperar el STASH.`
 > > > **stash@{2}:** tanto APPLY como POP puede ser especifico agregando el numero de STASH deseado.
 
-## Git TAG <"Commit">
-> **Def:** Agrega una etiqueta a un commit en especifico puede ser una version o un texto para definir mejor el commit y puede tener varios tags   
+## TAG
+> **Def:** Permite establecer una etiqueta en determinado commit de manera que se puede marcar tal commit como una version del proyecto.  
+>`Nota: Por default el tag toma el ultimo commit salvo que se defina el commit al que va dirigida.`  
+> > **git tag v1.4-lw commit** Establece una etiqueta ligera en determinado commit, en caso de que el tag vaya determinado al ultimo commit realizado se puede omitir el sha-1 del mismo.   
+> > **git tag -a v1.4 -m commit** Establece una etiqueta pesada en determinado commit, en caso de que el tag vaya determinado al ultimo commit realizado se puede omitir el sha-1 del mismo.   
+> > **git tag** Lista todos los tags.  
+> > **git tag -a -f v1.4 commit** Sobreescribe un tag.
+> > **git push origin --tags** Envia todos los tags al repositorio remoto.
+> > **git push origin v1.4** Envia el tag al repositorio remoto.  
+> > **git tag -d v1** Elimina determinado tag.  
 
 ## Git GC <"Commit">
 > **Def:** Ejecuta el recolector de basura que se encarga de desechar ciertos cambios y archivos bajo criterios de **git**.   
