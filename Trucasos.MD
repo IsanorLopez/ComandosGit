@@ -28,3 +28,14 @@ private void dgvGrid_Numeros_TextChanged(object sender, EventArgs e)
             }
         }
 ~~~
+
+## Tooltip
+~~~C#
+ ToolTip x = new ToolTip();
+ x.ToolTipIcon = ToolTipIcon.Error;
+ x.ToolTipTitle = "Carácter no admitido";
+ x.Show("Solo puede escribir caracteres válidos", txtFolioSubFolio, 0, txtFolioSubFolio.Size.Height, 1000);
+ txtFolioSubFolio.Text = "";
+~~~
+
+
