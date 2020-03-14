@@ -43,6 +43,7 @@
 > >`Nota: se debe tener cuidado puesto que se realiza directo y puede complicar revertir un cambio en especifico.`  
 > > **git commit --amend** Este tipo de commit destruye el ultimo commit sin perder los cambios y agregando los nuevos generando en un nuevo commit.  
 > >`Nota: ideal cuando hicimos un commit muy pronto y olvidamos agregar un cambio.Saltara una pantalla donde modificaremos el mensaje del commit presionamos ESC -> (shift+Z)x2`  
+> > **git commit --amend --no-edit**  Este tipo de commit agrega nuevos cambios que pudiesen pertenecer a un nuevo commit pero se agregan al ultimo commit realizado
 
 ## Git LOG -<"num de commits">
 > **Def:** Muestra la lista de commits realizados sobre la ramma en la que se encuentre.  
