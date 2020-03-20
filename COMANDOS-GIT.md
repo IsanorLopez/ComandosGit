@@ -52,7 +52,7 @@ Regresa los cambios del area de ensayo al area de trabajo.
 ### git reset --[Tipo] [SHA-1]
 Nos permitira regresar a un determinado commit y los cambios seran agregados dependiendo el tipo de reset.  
 
-### git reset --[Tipo] origin/<rama>  
+### git reset --[Tipo] origin/<'rama'>  
 Nos permite empatar dos ramas entre si, tomando en cuenta el tipo de reset colocara los cambios.  
 `*Nota: Comunmente utilizado para forzar los cambios de una rama a otra, comunmente para solucionar problemas de empate.`  
 
@@ -60,7 +60,7 @@ Nos permite empatar dos ramas entre si, tomando en cuenta el tipo de reset coloc
 Establece un commit dentro del repositorio local.  
 `*Nota: sera necesario tener los cambios previamente en el area de pruebas`  
 
-### git commit --am <mensaje> 
+### git commit --am <'mensaje'> 
 Es un tipo de commit directo, donde se agrega al area de trabajo y a su vez se realiza el commit con el mensaje en cuestion.  
 `*Nota: se debe tener cuidado puesto que se realiza directo y puede complicar revertir un cambio en especifico.`  
 
@@ -71,20 +71,20 @@ Este tipo de commit destruye el ultimo commit sin perder los cambios y agregando
 ### git commit --amend --no-edit 
 Este tipo de commit agrega nuevos cambios al ultimo commit realizado sin necesidad de modificar el mensaje  
 
-## git LOG -<num de commits>
+## git LOG -<'num de commits'>
 Muestra la lista de commits realizados sobre la ramma en la que se encuentre.  
 `*Nota: recomendado consultar solo una lista determinada de commits, evitar problema de bug al consultar sin delimitar.`  
 
-### git shortlog -<num de commits>
+### git shortlog -<'num de commits'>
 Muestra la lista de commits realizados de manera mas resumida en un bloque de texto sin separar uno a uno.  
 
-## git diff <rama> <rama> <archivo>
+## git diff <'rama'> <'rama'> <'archivo'>
 Denota las diferencias entre dos ramas.
 
-### git diff master <rama> <archivo>
+### git diff master <'rama'> <'archivo'>
 Puede especificarse un archivo de no querer ver todos los cambios en el resto de archivos.  
 
-### git diff --name-status <rama> <rama2> 
+### git diff --name-status <'rama'> <'rama2'> 
 Muestra los cambios relalizados a nivel de archivo.  
 `*Nota: el resumen de cambios puede parecer abrumador en definitiva una herramienta de visualizacion es la opcion para esto`  
 
@@ -100,7 +100,7 @@ Este comando baja todos los cambios(commits) del repositorio remoto al repositor
 Baja los cambios del orgien a la rama local en la que se encuentre y genera un merge entre las ramas para empatarlas.  
 `*Nota: Es la operacion inversa al PUSH por lo que de igual manera podra tener complicaciones al empatar los cambios y sera necesario resolverlos antes del MERGE.`  
 
-## git merge <rama>
+## git merge <'rama'>
 Realiza una mezcla de dos ramas, de la que haces referencia a la rama que estas.  
 `*Nota: Pueden surgir conflictos que deben ser solucionados igual que en PUSH o PULL.`  
 
