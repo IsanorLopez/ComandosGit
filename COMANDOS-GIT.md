@@ -6,7 +6,7 @@ Muestra todas las ramas del repositorio local y señala en la que se encuentra
 ### git branch -a 
 Lista todas las ramas del repositorio, tanto local como remotas.  
 
-### git branch "nombre"
+### git branch <rama>
 Este comando crea una rama a partir de la rama en la que estes situado.  
 `*Nota: Para borrar una rama sera necesario estar en otra ajena a esa rama recomendado hacerlo desde la rama MASTER.`  
 
