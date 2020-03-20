@@ -52,7 +52,7 @@ Regresa los cambios del area de ensayo al area de trabajo.
 ### git reset --[Tipo] [SHA-1]
 Nos permitira regresar a un determinado commit y los cambios seran agregados dependiendo el tipo de reset.  
 
-### git reset --[Tipo] origin/<branch_name>  
+### git reset --[Tipo] origin/<rama>  
 Nos permite empatar dos ramas entre si, tomando en cuenta el tipo de reset colocara los cambios.  
 `*Nota: Comunmente utilizado para forzar los cambios de una rama a otra, comunmente para solucionar problemas de empate.`  
 
