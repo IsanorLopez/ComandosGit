@@ -6,23 +6,23 @@ Muestra todas las ramas del repositorio local y señala en la que se encuentra
 ### git branch -a 
 Lista todas las ramas del repositorio, tanto local como remotas.  
 
-### git branch <rama>
+### git branch <'rama'>
 Este comando crea una rama a partir de la rama en la que estes situado.  
 `*Nota: Para borrar una rama sera necesario estar en otra ajena a esa rama recomendado hacerlo desde la rama MASTER.`  
 
-### git checkout -b <rama> 
+### git checkout -b <'rama'>
 Este comando crea una rama a partir de la rama en la que estes situado y se mueve a la nueva rama.  
 `*Nota: Se puede lanzar exepcion si hay cambios en el area de trabajo o area de pruebas.`  
 
-### git branch -d <rama>  
+### git branch -d <'rama'>  
 Borra la rama especificada y todos los archivos.  
 `*Nota: Puede lanzar una alerta en caso de que contenga cambios no MERGE con la rama que intenta borrarla.`  
 
-### git branch -D <rama> 
+### git branch -D <'rama'> 
 Borra la rama especificada y todos los archivos.  
 `*Nota: Forza a borrar la rama independiente de que existan cambios sin MERGE`  
 
-### git push --set-upstream origin <rama> 
+### git push --set-upstream origin <'rama'> 
 Necesario cuando se cree una nueva rama local puesto que no tiene establecido un origen en el remoto.   
 
 ## git status
