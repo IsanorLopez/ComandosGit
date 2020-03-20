@@ -10,19 +10,19 @@ Lista todas las ramas del repositorio, tanto local como remotas.
 Este comando crea una rama a partir de la rama en la que estes situado.  
 `*Nota: Para borrar una rama sera necesario estar en otra ajena a esa rama recomendado hacerlo desde la rama MASTER.`  
 
-### git checkout -b "nombre" 
+### git checkout -b <rama> 
 Este comando crea una rama a partir de la rama en la que estes situado y se mueve a la nueva rama.  
 `*Nota: Se puede lanzar exepcion si hay cambios en el area de trabajo o area de pruebas.`  
 
-### git branch -d "nombre"**  
+### git branch -d <rama>  
 Borra la rama especificada y todos los archivos.  
 `*Nota: Puede lanzar una alerta en caso de que contenga cambios no MERGE con la rama que intenta borrarla.`  
 
-### git branch -D "nombre" 
+### git branch -D <rama> 
 Borra la rama especificada y todos los archivos.  
 `*Nota: Forza a borrar la rama independiente de que existan cambios sin MERGE`  
 
-### git push --set-upstream origin "nombre" 
+### git push --set-upstream origin <rama> 
 Necesario cuando se cree una nueva rama local puesto que no tiene establecido un origen en el remoto.   
 
 ## git status
@@ -60,7 +60,7 @@ Nos permite empatar dos ramas entre si, tomando en cuenta el tipo de reset coloc
 Establece un commit dentro del repositorio local.  
 `*Nota: sera necesario tener los cambios previamente en el area de pruebas`  
 
-### git commit --am "Mensaje" 
+### git commit --am <mensaje> 
 Es un tipo de commit directo, donde se agrega al area de trabajo y a su vez se realiza el commit con el mensaje en cuestion.  
 `*Nota: se debe tener cuidado puesto que se realiza directo y puede complicar revertir un cambio en especifico.`  
 
