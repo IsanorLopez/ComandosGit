@@ -81,7 +81,7 @@ Muestra la lista de commits realizados de manera mas resumida en un bloque de te
 ## git diff <rama> <rama> <archivo>
 Denota las diferencias entre dos ramas.
 
-### git diff master rama_mod1 archivo.txt
+### git diff master <rama> <archivo>
 Puede especificarse un archivo de no querer ver todos los cambios en el resto de archivos.  
 
 ### git diff --name-status <rama> <rama2> 
