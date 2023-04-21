@@ -40,6 +40,20 @@ Necesario cuando se cree una nueva rama local puesto que no tiene establecido un
 
 Muestra un resumen de la rama y los cambios pendientes en ella sin commit.  
 
+## git mv
+
+Se encarga de mover y/o renombrar archivo dentro del repositorio
+
+- [X] git mv .\proc_compromocionestraslapes.sql .\scripts\proc_compromocionesTraslapes.sql
+
+## git rm -r
+
+Remueve archivos del repositorio  
+
+- [X] gir rm .\scripts
+
+`*Nota: el flag r implementa la funcionalidad recursiva lo que permite borrar un directorio y todo su contenido`
+
 ## git add
 
 Comando para agregar los cambios al area de trabajo.  
