@@ -170,11 +170,11 @@ En caso de que el merge se vuela complejo al existir un conflicto e intentar res
 
 `*Nota: Solo funciona cuando surja un conflicto, de tener un merge exitoso sin problemas este comando no surtira ningun efecto.`
 
-### git merge -s recursive -X ours <rama-a-fusionar>
+### git merge -s recursive -X ours <'rama-a-fusionar'>
 
 Priorizar mis cambios sobre los que llegan
 
-### git merge -s recursive -X theirs <rama-a-fusionar>
+### git merge -s recursive -X theirs <'rama-a-fusionar'>
 
 Priorizar los cambios que llegan sobre los mios
 
