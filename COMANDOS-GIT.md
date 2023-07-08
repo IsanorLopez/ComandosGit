@@ -169,3 +169,12 @@ Realiza una mezcla de dos ramas, de la que haces referencia a la rama que estas.
 En caso de que el merge se vuela complejo al existir un conflicto e intentar resolverlo podemos abortar el merge, regresando los cambios que el merge trajo consigo.  
 
 `*Nota: Solo funciona cuando surja un conflicto, de tener un merge exitoso sin problemas este comando no surtira ningun efecto.`
+
+### git merge -s recursive -X ours <rama-a-fusionar>
+
+Priorizar mis cambios sobre los que llegan
+
+### git merge -s recursive -X theirs <rama-a-fusionar>
+
+Priorizar los cambios que llegan sobre los mios
+
